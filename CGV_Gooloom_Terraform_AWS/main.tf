@@ -61,7 +61,7 @@ locals {
   subnet_names = flatten([
     for az in var.azs : [
       for s in var.svc :
-      format("${var.prefix}-${var.env}-CGV-sub-%s-%s-%s", az, s, element(split(",", replace("-", "", var.azs)), index(var.azs, az) % var.num_azs)-pri)
+      format("${var.prefix}-${var.env}-CGV-sub-%s-%s-%s-pri", az, s, element(split(",", replace("-", "", var.azs)), index(var.azs, az) % var.num_azs))
     ]
   ])
 }
