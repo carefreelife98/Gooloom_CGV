@@ -5,9 +5,9 @@
 terraform {
   backend "remote" {
     hostname = "app.terraform.io"
-    organization = "YOURORGANIZATION"
+    organization = "Gooloom"
     workspaces {
-      name = "YOURWORKSPACE"
+      name = "Gooloom_CGV"
     }
   }
 }
