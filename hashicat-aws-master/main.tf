@@ -8,7 +8,6 @@ terraform {
 }
 
 provider "aws" {
-  shared_config_file      = "/Users/carefreelife/.aws/config"
   shared_credentials_file = "/Users/carefreelife/.aws/credentials"
   profile = "default"
   region  = var.region
