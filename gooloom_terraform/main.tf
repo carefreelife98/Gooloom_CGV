@@ -1,4 +1,11 @@
 terraform {
+  cloud {
+    organization = "Gooloom"
+    workspaces {
+      name = "Gooloom_CGV"
+    }
+  }
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
