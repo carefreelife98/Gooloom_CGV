@@ -45,18 +45,36 @@ resource "aws_subnet" "public_subnet" {
   }
 }
 
-resource "aws_subnet" "private_subnet" {
-  count             = var.num_azs * 2 * var.num_private_subnets
-#  name = "${var.prefix}-${var.env}-CGV-sub-${element(var.svc, count.index % length(var.svc))}-pri${count.index / 2}"
-  vpc_id            = aws_vpc.vpc.id
-  cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index + 8)
-  availability_zone = element(var.azs, count.index / (2 * var.num_private_subnets))
+#resource "aws_subnet" "private_subnet" {
+#  count             = var.num_azs * 2 * var.num_private_subnets
+##  name = "${var.prefix}-${var.env}-CGV-sub-${element(var.svc, count.index % length(var.svc))}-pri${count.index / 2}"
+#  vpc_id            = aws_vpc.vpc.id
+#  cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index + 8)
+#  availability_zone = element(var.azs, count.index / (2 * var.num_private_subnets))
+#
+#  tags = {
+#    Name = "private-subnet-${element(var.azs, count.index / (2 * var.num_private_subnets))}-${count.index % var.num_private_subnets + 1}"
+#  }
+#}
 
-  tags = {
-    Name = "private-subnet-${element(var.azs, count.index / (2 * var.num_private_subnets))}-${count.index % var.num_private_subnets + 1}"
-  }
+locals {
+  subnet_names = flatten([
+    for az in var.azs : [
+      for s in var.svc :
+      format("${var.prefix}-${var.env}-CGV-sub-%s-%s-%s", az, s, element(split(",", replace("-", "", var.azs)), index(var.azs, az) % var.num_azs)-pri)
+    ]
+  ])
 }
 
+resource "aws_subnet" "private_subnet" {
+  count             = length(local.subnet_names)
+  vpc_id            = aws_vpc.vpc.id
+  cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index + 16)
+  availability_zone = element(var.azs, count.index / length(var.svc))
+  tags = {
+    Name = local.subnet_names[count.index]
+  }
+}
 
 #resource "aws_security_group" "sg" {
 #  name = "${var.prefix}-${var.env}-CGV-sg-web"

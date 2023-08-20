@@ -100,5 +100,5 @@ variable "env" {
 variable "svc" {
   description = "web / was / db"
   type        = list(string)
-  default     = ["not chosen"]
+  default     = ["default"]
 }
