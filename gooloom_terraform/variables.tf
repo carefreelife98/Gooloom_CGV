@@ -25,3 +25,12 @@ variable "num_private_subnets" {
   default     = 3
 }
 
+variable "ami" {
+  description = "Instance AMI"
+  type        = string
+}
+
+variable "kpair" {
+  description = "gooloom_keypair_name"
+  type	      = string
+}

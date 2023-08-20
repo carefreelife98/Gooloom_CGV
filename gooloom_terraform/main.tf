@@ -74,3 +74,13 @@ resource "aws_lb_listener" "alb_listener" {
   }
 }
 
+resource "aws_instance" "example_instance" {
+  ami           = var.ami  # 원하는 AMI ID로 변경
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.public_subnet[0].id
+  key_name      = var.kpair  # SSH 키 페어 이름으로 변경
+
+  tags = {
+    Name = "example-instance"
+  }
+}
