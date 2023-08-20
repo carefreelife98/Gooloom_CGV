@@ -7,11 +7,12 @@
 
 variable "prefix" {
   description = "This prefix will be included in the name of most resources."
+  default     = "csm-terraform cloud"
 }
 
 variable "region" {
   description = "The region where the resources are created."
-  default     = "us-east-1"
+  default     = "ap-northeast-2"
 }
 
 variable "address_space" {
@@ -26,12 +27,12 @@ variable "subnet_prefix" {
 
 variable "instance_type" {
   description = "Specifies the AWS instance type."
-  default     = "t2.micro"
+  default     = "t3.medium"
 }
 
 variable "admin_username" {
   description = "Administrator user name for mysql"
-  default     = "hashicorp"
+  default     = "carefreelife"
 }
 
 variable "height" {
