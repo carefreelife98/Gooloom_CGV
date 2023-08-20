@@ -32,16 +32,27 @@ resource "aws_vpc" "vpc" {
 #  }
 #}
 
+#resource "aws_subnet" "public_subnet" {
+#  count             = var.num_azs * 2
+##  name = "${var.prefix}-${var.env}-CGV-sub-pub${count.index / 2}"
+#  vpc_id            = aws_vpc.vpc.id
+#  cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index)
+#  availability_zone = element(var.azs, count.index / 2)
+#  map_public_ip_on_launch = true
+#
+#  tags = {
+#    Name = "${var.prefix}-${var.env}-sub-pub"
+#  }
+#}
 resource "aws_subnet" "public_subnet" {
   count             = var.num_azs * 2
-#  name = "${var.prefix}-${var.env}-CGV-sub-pub${count.index / 2}"
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index)
   availability_zone = element(var.azs, count.index / 2)
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "${var.prefix}-${var.env}-sub-pub"
+    Name = "${var.prefix}-${var.env}-sub-pub-${count.index / 2 + 1}"
   }
 }
 
@@ -65,16 +76,25 @@ locals {
     ]
   ])
 }
-
 resource "aws_subnet" "private_subnet" {
   count             = length(local.subnet_names)
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index + 16)
-  availability_zone = element(var.azs, count.index / length(var.svc))
+  availability_zone = element(var.azs, (count.index / var.num_private_subnets) % var.num_azs)
+
   tags = {
     Name = local.subnet_names[count.index]
   }
 }
+#resource "aws_subnet" "private_subnet" {
+#  count             = length(local.subnet_names)
+#  vpc_id            = aws_vpc.vpc.id
+#  cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index + 16)
+#  availability_zone = element(var.azs, count.index / length(var.svc))
+#  tags = {
+#    Name = local.subnet_names[count.index]
+#  }
+#}
 
 #resource "aws_security_group" "sg" {
 #  name = "${var.prefix}-${var.env}-CGV-sg-web"
