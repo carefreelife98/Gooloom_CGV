@@ -34,7 +34,7 @@ resource "aws_vpc" "vpc" {
 
 resource "aws_subnet" "public_subnet" {
   count             = var.num_azs * 2
-  name = "${var.prefix}-${var.env}-CGV-sub-pub${count.index / 2}"
+#  name = "${var.prefix}-${var.env}-CGV-sub-pub${count.index / 2}"
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index)
   availability_zone = element(var.azs, count.index / 2)
@@ -47,7 +47,7 @@ resource "aws_subnet" "public_subnet" {
 
 resource "aws_subnet" "private_subnet" {
   count             = var.num_azs * 2 * var.num_private_subnets
-  name = "${var.prefix}-${var.env}-CGV-sub-${element(var.svc, count.index % length(var.svc))}-pri${count.index / 2}"
+#  name = "${var.prefix}-${var.env}-CGV-sub-${element(var.svc, count.index % length(var.svc))}-pri${count.index / 2}"
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index + 8)
   availability_zone = element(var.azs, count.index / (2 * var.num_private_subnets))
