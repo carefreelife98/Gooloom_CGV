@@ -51,9 +51,11 @@ variable "placeholder" {
 }
 
 variable "AWS_ACCESS_KEY_ID" {
+  type = string
   default = "it will be overwritted"
 }
 
 variable "AWS_SECRET_ACCESS_KEY" {
+  type = string
   default = "it will be overwritted"
 }
