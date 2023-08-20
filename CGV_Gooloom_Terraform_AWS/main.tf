@@ -41,7 +41,7 @@ resource "aws_subnet" "public_subnet" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "public-subnet-${element(var.azs, count.index / 2)}-${count.index % 2 + 1}"
+    Name = "${var.prefix}-${var.env}-sub-pub"
   }
 }
 
@@ -61,7 +61,7 @@ locals {
   subnet_names = flatten([
     for az in var.azs : [
       for s in var.svc :
-      format("${var.prefix}-${var.env}-CGV-sub-%s-%s-%s-pri", az, s, element(split(",", replace("-", "", var.azs)), index(var.azs, az) % var.num_azs))
+      format("${var.prefix}-${var.env}-CGV-sub-%s-%s-%s-pri", az, s, element(split("-", var.azs[0]), index(var.azs, az) % var.num_azs))
     ]
   ])
 }
