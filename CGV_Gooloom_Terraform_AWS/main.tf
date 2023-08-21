@@ -26,7 +26,7 @@ resource "aws_vpc" "vpc" {
 resource "aws_subnet" "public_subnet" {
   count             = 2 # 두번 반복
   vpc_id            = aws_vpc.vpc.id
-  cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index)
+  cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index + 5)
   availability_zone = element(var.azs, count.index)
   map_public_ip_on_launch = true
 
@@ -175,6 +175,16 @@ resource "aws_route_table_association" "private_subnet_2c_assoc" {
 
 
 ############### NAT Instance & Keypair ###############
+resource "aws_instance" "bastion" {
+  count      = 1
+  ami        = "ami-01056eaaa603955a4"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
+  instance_type = "t3.medium"
+  subnet_id  = aws_subnet.public_subnet[0].id
+  tags = {
+    Name = "${var.prefix}-${var.env}-bastion-2a"
+  }
+}
+
 resource "aws_instance" "nat_instance_2a" {
   count      = 1
   ami        = "ami-01056eaaa603955a4"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
