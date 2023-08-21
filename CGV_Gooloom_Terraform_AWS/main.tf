@@ -129,7 +129,7 @@ resource "aws_route_table_association" "public_subnet_assoc" {
 ############### private routing ###############
 
 resource "aws_route_table" "private_subnet_rt_2a" {
-  count = 3
+  count = 2
   vpc_id = aws_vpc.vpc.id
 
   tags = {
@@ -138,7 +138,7 @@ resource "aws_route_table" "private_subnet_rt_2a" {
 }
 
 resource "aws_route_table_association" "private_subnet_2a_assoc" {
-  count       = 3
+  count       = 2
   subnet_id   = aws_subnet.private_subnet-2a[count.index].id
   route_table_id = aws_route_table.private_subnet_rt_2a[count.index].id
 }
@@ -151,7 +151,7 @@ resource "aws_route_table_association" "private_subnet_2a_assoc" {
 #
 
 resource "aws_route_table" "private_subnet_rt_2c" {
-  count = 3
+  count = 2
   vpc_id = aws_vpc.vpc.id
 
   tags = {
@@ -160,7 +160,7 @@ resource "aws_route_table" "private_subnet_rt_2c" {
 }
 
 resource "aws_route_table_association" "private_subnet_2c_assoc" {
-  count       = 3
+  count       = 2
   subnet_id   = aws_subnet.private_subnet-2c[count.index].id
   route_table_id = aws_route_table.private_subnet_rt_2c[count.index].id
 }

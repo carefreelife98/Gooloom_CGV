@@ -68,7 +68,7 @@ variable "vpc_cidr" {
 
 
 
-#variable "key" {
+# variable "key" {
 #  description = "SSH-keypair-NAT"
 #  type        = string
 #  default     = "PRD"
