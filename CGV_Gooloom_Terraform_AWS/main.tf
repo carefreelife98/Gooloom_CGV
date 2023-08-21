@@ -276,7 +276,7 @@ resource "aws_route_table_association" "private_subnet_2c_assoc" {
 
 resource "aws_instance" "nat_instance_2a" {
   count      = 1
-  ami        = "ami-12345678"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
+  ami        = "ami-ami-01056eaaa603955a4"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
   instance_type = "t3.medium"
   subnet_id  = aws_subnet.public_subnet[0].id
   key_name   = var.key  # 필요한 경우 키 이름으로 변경
@@ -287,7 +287,7 @@ resource "aws_instance" "nat_instance_2a" {
 
 resource "aws_instance" "nat_instance_2c" {
   count      = 1
-  ami        = "ami-12345678"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
+  ami        = "ami-ami-01056eaaa603955a4"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
   instance_type = "t3.medium"
   subnet_id  = aws_subnet.public_subnet[1].id
   key_name   = var.key  # 필요한 경우 키 이름으로 변경
