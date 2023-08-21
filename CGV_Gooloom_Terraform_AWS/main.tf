@@ -23,27 +23,6 @@ resource "aws_vpc" "vpc" {
   }
 }
 
-#resource "aws_subnet" "hashicat" {
-#  vpc_id     = aws_vpc.vpc.id
-#  cidr_block = var.subnet_prefix
-#
-#  tags = {
-#    name = "${var.prefix}-subnet"
-#  }
-#}
-
-#resource "aws_subnet" "public_subnet" {
-#  count             = var.num_azs * 2
-##  name = "${var.prefix}-${var.env}-CGV-sub-pub${count.index / 2}"
-#  vpc_id            = aws_vpc.vpc.id
-#  cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index)
-#  availability_zone = element(var.azs, count.index / 2)
-#  map_public_ip_on_launch = true
-#
-#  tags = {
-#    Name = "${var.prefix}-${var.env}-sub-pub"
-#  }
-#}
 resource "aws_subnet" "public_subnet" {
   count             = 2 # 두번 반복
   vpc_id            = aws_vpc.vpc.id
@@ -63,7 +42,7 @@ resource "aws_subnet" "private_subnet-2a" {
   availability_zone = var.azs[0]
 
   tags = {
-    Name = "${var.prefix}-${var.env}-sub-${element(var.svc, count.index)}-pri"
+    Name = "${var.prefix}-${var.env}-sub-${element(var.svc, count.index)}-pri-2a"
   }
 }
 
@@ -74,57 +53,9 @@ resource "aws_subnet" "private_subnet-2c" {
   availability_zone = var.azs[1]
 
   tags = {
-    Name = "${var.prefix}-${var.env}-sub-${element(var.svc, count.index)}-pri"
+    Name = "${var.prefix}-${var.env}-sub-${element(var.svc, count.index)}-pri-2c"
   }
 }
-#resource "aws_subnet" "private_subnet" {
-#  count             = length(local.subnet_names)
-#  vpc_id            = aws_vpc.vpc.id
-#  cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index + 16)
-#  availability_zone = element(var.azs, count.index / length(var.svc))
-#  tags = {
-#    Name = local.subnet_names[count.index]
-#  }
-#}
-
-#resource "aws_security_group" "sg" {
-#  name = "${var.prefix}-${var.env}-CGV-sg-web"
-#
-#  vpc_id = aws_vpc.vpc.id
-#
-#  ingress {
-#    from_port   = 22
-#    to_port     = 22
-#    protocol    = "tcp"
-#    cidr_blocks = ["0.0.0.0/0"]
-#  }
-#
-#  ingress {
-#    from_port   = 80
-#    to_port     = 80
-#    protocol    = "tcp"
-#    cidr_blocks = ["0.0.0.0/0"]
-#  }
-#
-#  ingress {
-#    from_port   = 443
-#    to_port     = 443
-#    protocol    = "tcp"
-#    cidr_blocks = ["0.0.0.0/0"]
-#  }
-#
-#  egress {
-#    from_port       = 0
-#    to_port         = 0
-#    protocol        = "-1"
-#    cidr_blocks     = ["0.0.0.0/0"]
-#    prefix_list_ids = []
-#  }
-#
-#  tags = {
-#    Name = "${var.prefix}-security-group"
-#  }
-#}
 
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
@@ -142,11 +73,6 @@ resource "aws_route_table" "rt" {
     gateway_id = aws_internet_gateway.igw.id
   }
 }
-
-#resource "aws_route_table_association" "rt_association" {
-#  subnet_id      = aws_subnet.public_subnet.id
-#  route_table_id = aws_route_table.rt.id
-#}
 
 resource "aws_lb" "alb" {
   name               = "${var.prefix}-${var.env}-CGV-alb"
@@ -278,3 +204,99 @@ resource "aws_lb_listener" "alb_listener" {
 #  key_name   = local.private_key_filename
 #  public_key = tls_private_key.hashicat.public_key_openssh
 #}
+
+resource "aws_route_table" "public_subnet_rt" {
+  count = 2
+  vpc_id = aws_vpc.vpc.id
+
+  tags = {
+    Name = "${var.prefix}-${var.env}-public-subnet-rt-${count.index}"
+  }
+}
+
+resource "aws_route" "public_subnet_rt_association" {
+  count = 2
+  route_table_id         = aws_route_table.public_subnet_rt[count.index].id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.igw.id
+}
+
+resource "aws_route_table_association" "public_subnet_assoc" {
+  count       = 2
+  subnet_id   = aws_subnet.public_subnet[count.index].id
+  route_table_id = aws_route_table.public_subnet_rt[count.index].id
+}
+
+resource "aws_route_table" "private_subnet_rt_2a" {
+  count = 3
+  vpc_id = aws_vpc.vpc.id
+
+  tags = {
+    Name = "${var.prefix}-${var.env}-private-subnet-rt-2a-${count.index}"
+  }
+}
+
+resource "aws_route" "private_subnet_rt_2a_association" {
+  count = 3
+  route_table_id         = aws_route_table.private_subnet_rt_2a[count.index].id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_instance.nat_instance_2a[count.index].id
+}
+
+resource "aws_route_table_association" "private_subnet_2a_assoc" {
+  count       = 3
+  subnet_id   = aws_subnet.private_subnet-2a[count.index].id
+  route_table_id = aws_route_table.private_subnet_rt_2a[count.index].id
+}
+
+resource "aws_route_table" "private_subnet_rt_2c" {
+  count = 3
+  vpc_id = aws_vpc.vpc.id
+
+  tags = {
+    Name = "${var.prefix}-${var.env}-private-subnet-rt-2c-${count.index}"
+  }
+}
+
+resource "aws_route" "private_subnet_rt_2c_association" {
+  count = 3
+  route_table_id         = aws_route_table.private_subnet_rt_2c[count.index].id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_instance.nat_instance_2c[count.index].id
+}
+
+resource "aws_route_table_association" "private_subnet_2c_assoc" {
+  count       = 3
+  subnet_id   = aws_subnet.private_subnet-2c[count.index].id
+  route_table_id = aws_route_table.private_subnet_rt_2c[count.index].id
+}
+
+
+############### NAT Instance & Keypair ###############
+
+resource "aws_instance" "nat_instance_2a" {
+  count      = 1
+  ami        = "ami-12345678"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
+  instance_type = "t3.medium"
+  subnet_id  = aws_subnet.public_subnet[0].id
+  key_name   = var.key  # 필요한 경우 키 이름으로 변경
+  tags = {
+    Name = "${var.prefix}-${var.env}-nat-instance-2a"
+  }
+}
+
+resource "aws_instance" "nat_instance_2c" {
+  count      = 1
+  ami        = "ami-12345678"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
+  instance_type = "t3.medium"
+  subnet_id  = aws_subnet.public_subnet[1].id
+  key_name   = var.key  # 필요한 경우 키 이름으로 변경
+  tags = {
+    Name = "${var.prefix}-${var.env}-nat-instance-2c"
+  }
+}
+
+resource "aws_key_pair" "key" {
+  key_name   = var.key  # 원하는 키 페어의 이름으로 변경
+  public_key = file("~/.ssh/id_rsa.pub")  # 퍼블릭 키의 경로를 지정
+}

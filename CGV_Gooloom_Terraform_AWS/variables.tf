@@ -20,11 +20,6 @@ variable "address_space" {
   default     = "10.0.0.0/16"
 }
 
-#variable "subnet_prefix" {
-#  description = "The address prefix to use for the subnet."
-#  default     = "10.0.10.0/24"
-#}
-
 variable "instance_type" {
   description = "Specifies the AWS instance type."
   default     = "t3.medium"
@@ -34,21 +29,6 @@ variable "admin_username" {
   description = "Administrator user name for mysql"
   default     = "carefreelife"
 }
-
-#variable "height" {
-#  default     = "400"
-#  description = "Image height in pixels."
-#}
-#
-#variable "width" {
-#  default     = "600"
-#  description = "Image width in pixels."
-#}
-
-#variable "placeholder" {
-#  default     = "placekitten.com"
-#  description = "Image-as-a-service URL. Some other fun ones to try are fillmurray.com, placecage.com, placebeard.it, loremflickr.com, baconmockup.com, placeimg.com, placebear.com, placeskull.com, stevensegallery.com, placedog.net"
-#}
 
 variable "AWS_ACCESS_KEY_ID" {
   type = string
@@ -88,7 +68,11 @@ variable "vpc_cidr" {
 
 
 
-
+variable "key" {
+  description = "SSH-keypair-NAT"
+  type        = "string"
+  default     = "PRD"
+}
 
 # Custom
 variable "env" {
