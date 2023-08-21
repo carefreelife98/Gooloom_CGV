@@ -111,6 +111,12 @@ resource "aws_route_table" "public_subnet_rt" {
   }
 }
 
+resource "aws_route_table_association" "public_subnet_assoc" {
+  count       = 2
+  subnet_id   = aws_subnet.public_subnet[count.index].id
+  route_table_id = aws_route_table.public_subnet_rt[count.index].id
+}
+
 # 아래 내용은 위의 route {} 로 포함됨
 #resource "aws_route" "public_subnet_rt_association" {
 #  count = 2
@@ -119,11 +125,6 @@ resource "aws_route_table" "public_subnet_rt" {
 #  gateway_id             = aws_internet_gateway.igw.id
 #}
 #
-#resource "aws_route_table_association" "public_subnet_assoc" {
-#  count       = 2
-#  subnet_id   = aws_subnet.public_subnet[count.index].id
-#  route_table_id = aws_route_table.public_subnet_rt[count.index].id
-#}
 
 ############### private routing ###############
 
