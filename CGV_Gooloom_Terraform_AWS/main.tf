@@ -40,7 +40,7 @@ resource "aws_subnet" "private_subnet-2a" {
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = cidrsubnet(var.vpc_cidr, 8, (count.index * 1) + 11)
   availability_zone = var.azs[0]
-
+  map_public_ip_on_launch = false #퍼블릭 IP 부여를 하지 않습니다.
   tags = {
     Name = "${var.prefix}-${var.env}-sub-${element(var.svc, count.index)}-pri-2a"
   }
@@ -51,7 +51,7 @@ resource "aws_subnet" "private_subnet-2c" {
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = cidrsubnet(var.vpc_cidr, 8, (count.index * 1) + 22)
   availability_zone = var.azs[1]
-
+  map_public_ip_on_launch = false #퍼블릭 IP 부여를 하지 않습니다.
   tags = {
     Name = "${var.prefix}-${var.env}-sub-${element(var.svc, count.index)}-pri-2c"
   }
@@ -102,24 +102,28 @@ resource "aws_lb_listener" "alb_listener" {
 resource "aws_route_table" "public_subnet_rt" {
   count = 2
   vpc_id = aws_vpc.vpc.id
-
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "aws_internet_gateway.terra-igw.id" #Internet Gateway 별칭 입력
+  }
   tags = {
     Name = "${var.prefix}-${var.env}-public-subnet-rt-${count.index}"
   }
 }
 
-resource "aws_route" "public_subnet_rt_association" {
-  count = 2
-  route_table_id         = aws_route_table.public_subnet_rt[count.index].id
-  destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = aws_internet_gateway.igw.id
-}
-
-resource "aws_route_table_association" "public_subnet_assoc" {
-  count       = 2
-  subnet_id   = aws_subnet.public_subnet[count.index].id
-  route_table_id = aws_route_table.public_subnet_rt[count.index].id
-}
+# 아래 내용은 위의 route {} 로 포함됨
+#resource "aws_route" "public_subnet_rt_association" {
+#  count = 2
+#  route_table_id         = aws_route_table.public_subnet_rt[count.index].id
+#  destination_cidr_block = "0.0.0.0/0"
+#  gateway_id             = aws_internet_gateway.igw.id
+#}
+#
+#resource "aws_route_table_association" "public_subnet_assoc" {
+#  count       = 2
+#  subnet_id   = aws_subnet.public_subnet[count.index].id
+#  route_table_id = aws_route_table.public_subnet_rt[count.index].id
+#}
 
 ############### private routing ###############
 
@@ -171,7 +175,7 @@ resource "aws_route_table_association" "public_subnet_assoc" {
 ############### NAT Instance & Keypair ###############
 resource "aws_instance" "nat_instance_2a" {
   count      = 1
-  ami        = "ami-ami-01056eaaa603955a4"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
+  ami        = "ami-01056eaaa603955a4"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
   instance_type = "t3.medium"
   subnet_id  = aws_subnet.public_subnet[0].id
   tags = {
@@ -181,7 +185,7 @@ resource "aws_instance" "nat_instance_2a" {
 
 resource "aws_instance" "nat_instance_2c" {
   count      = 1
-  ami        = "ami-ami-01056eaaa603955a4"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
+  ami        = "ami-01056eaaa603955a4"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
   instance_type = "t3.medium"
   subnet_id  = aws_subnet.public_subnet[1].id
   tags = {
