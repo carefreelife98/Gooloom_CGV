@@ -74,30 +74,30 @@ resource "aws_route_table" "rt" {
   }
 }
 
-resource "aws_lb" "alb" {
-  name               = "${var.prefix}-${var.env}-CGV-alb"
-  internal           = false
-  load_balancer_type = "application"
-  subnets            = aws_subnet.public_subnet[*].id
-
-  enable_deletion_protection = false
-}
-
-resource "aws_lb_listener" "alb_listener" {
-  load_balancer_arn = aws_lb.alb.arn
-  port              = 80
-  protocol          = "HTTP"
-
-  default_action {
-    type = "fixed-response"
-
-    fixed_response {
-      content_type = "text/plain"
-      message_body = "Hello, world!"
-      status_code  = "200"
-    }
-  }
-}
+#resource "aws_lb" "alb" {
+#  name               = "${var.prefix}-${var.env}-CGV-alb"
+#  internal           = false
+#  load_balancer_type = "application"
+#  subnets            = aws_subnet.public_subnet[*].id
+#
+#  enable_deletion_protection = false
+#}
+#
+#resource "aws_lb_listener" "alb_listener" {
+#  load_balancer_arn = aws_lb.alb.arn
+#  port              = 80
+#  protocol          = "HTTP"
+#
+#  default_action {
+#    type = "fixed-response"
+#
+#    fixed_response {
+#      content_type = "text/plain"
+#      message_body = "Hello, world!"
+#      status_code  = "200"
+#    }
+#  }
+#}
 
 resource "aws_route_table" "public_subnet_rt" {
   count = 2
@@ -142,13 +142,13 @@ resource "aws_route_table_association" "private_subnet_2a_assoc" {
   subnet_id   = aws_subnet.private_subnet-2a[count.index].id
   route_table_id = aws_route_table.private_subnet_rt_2a[count.index].id
 }
-#resource "aws_route" "private_subnet_rt_2a_association" {
-#  count = 3
-#  route_table_id         = aws_route_table.private_subnet_rt_2a[count.index].id
-#  destination_cidr_block = "0.0.0.0/0"
-#  nat_gateway_id         = aws_instance.nat_instance_2a[count.index].id
-#}
-#
+resource "aws_route" "private_subnet_rt_2a_association" {
+  count = 3
+  route_table_id         = aws_route_table.private_subnet_rt_2a[count.index].id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_instance.nat_instance_2a[count.index].id
+}
+
 
 resource "aws_route_table" "private_subnet_rt_2c" {
   count = 2
@@ -180,6 +180,7 @@ resource "aws_instance" "bastion" {
   ami        = "ami-01056eaaa603955a4"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
   instance_type = "t3.medium"
   subnet_id  = aws_subnet.public_subnet[0].id
+  key_name = "gooloom"
   tags = {
     Name = "${var.prefix}-${var.env}-bastion-2a"
   }
