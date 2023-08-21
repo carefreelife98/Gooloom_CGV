@@ -5,4 +5,4 @@ num_azs        = 2
 num_private_subnets = 3
 
 env            = "PRD"
-svc            = ["web", "was", "db"]
+svc            = ["web-was", "db"]
