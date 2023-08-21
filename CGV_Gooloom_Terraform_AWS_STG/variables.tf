@@ -78,11 +78,11 @@ variable "vpc_cidr" {
 variable "env" {
   description = "DEV / STG / PRD"
   type        = string
-  default     = "PRD"
+  default     = "STG"
 }
 
 variable "svc" {
-  description = "web / was / db"
+  description = "web, was / db"
   type        = list(string)
   default     = ["default"]
 }

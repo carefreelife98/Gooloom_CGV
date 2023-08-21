@@ -7,7 +7,7 @@ terraform {
     hostname = "app.terraform.io"
     organization = "Gooloom"
     workspaces {
-      name = "Gooloom_CGV"
+      name = "Gooloom_CGV_STG"
     }
   }
 }
