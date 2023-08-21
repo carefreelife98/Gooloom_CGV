@@ -205,3 +205,43 @@ resource "aws_instance" "nat_instance_2c" {
     Name = "${var.prefix}-${var.env}-nat-instance-2c"
   }
 }
+
+
+
+
+
+resource "aws_nat_gateway" "nat_gw_2a" {
+  count      = 1
+  allocation_id = aws_eip.nat_eip_2a[count.index].id
+  subnet_id  = aws_subnet.public_subnet[0].id
+
+  tags = {
+    Name = "${var.prefix}-${var.env}-nat-gw-2a"
+  }
+}
+
+resource "aws_nat_gateway" "nat_gw_2c" {
+  count      = 1
+  allocation_id = aws_eip.nat_eip_2c[count.index].id
+  subnet_id  = aws_subnet.public_subnet[1].id
+
+  tags = {
+    Name = "${var.prefix}-${var.env}-nat-gw-2c"
+  }
+}
+
+resource "aws_eip" "nat_eip_2a" {
+  count = 1
+
+  tags = {
+    Name = "${var.prefix}-${var.env}-nat-eip-2a"
+  }
+}
+
+resource "aws_eip" "nat_eip_2c" {
+  count = 1
+
+  tags = {
+    Name = "${var.prefix}-${var.env}-nat-eip-2c"
+  }
+}
