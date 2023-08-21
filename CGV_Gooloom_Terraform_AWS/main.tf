@@ -104,7 +104,7 @@ resource "aws_route_table" "public_subnet_rt" {
   vpc_id = aws_vpc.vpc.id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = "aws_internet_gateway.igw.id" #Internet Gateway 별칭 입력
+    gateway_id = aws_internet_gateway.igw.id #Internet Gateway 별칭 입력
   }
   tags = {
     Name = "${var.prefix}-${var.env}-public-subnet-rt-${count.index}"
