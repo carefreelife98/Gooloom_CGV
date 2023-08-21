@@ -131,10 +131,7 @@ resource "aws_route_table_association" "public_subnet_assoc" {
 resource "aws_route_table" "private_subnet_rt_2a" {
   count = 3
   vpc_id = aws_vpc.vpc.id
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = local #Internet Gateway 별칭 입력
-  }
+
   tags = {
     Name = "${var.prefix}-${var.env}-private-subnet-rt-2a-${count.index}"
   }
@@ -156,10 +153,7 @@ resource "aws_route_table_association" "private_subnet_2a_assoc" {
 resource "aws_route_table" "private_subnet_rt_2c" {
   count = 3
   vpc_id = aws_vpc.vpc.id
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = local #Internet Gateway 별칭 입력
-  }
+
   tags = {
     Name = "${var.prefix}-${var.env}-private-subnet-rt-2c-${count.index}"
   }
