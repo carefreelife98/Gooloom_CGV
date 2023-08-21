@@ -19,7 +19,7 @@ resource "aws_vpc" "vpc" {
 
   tags = {
     name = "${var.prefix}-CGV-vpc-${var.region}"
-    environment = "Production"
+#    environment = "Production"
   }
 }
 
@@ -142,12 +142,12 @@ resource "aws_route_table_association" "private_subnet_2a_assoc" {
   subnet_id   = aws_subnet.private_subnet-2a[count.index].id
   route_table_id = aws_route_table.private_subnet_rt_2a[count.index].id
 }
-#resource "aws_route" "private_subnet_rt_2a_association" {
-#  count = 3
-#  route_table_id         = aws_route_table.private_subnet_rt_2a[count.index].id
-#  destination_cidr_block = "0.0.0.0/0"
-#  nat_gateway_id         = aws_instance.nat_instance_2a[count.index].id
-#}
+resource "aws_route" "private_subnet_rt_2a_association" {
+  count = 2
+  route_table_id         = aws_route_table.private_subnet_rt_2a[count.index].id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_instance.nat_instance_2a[count.index].id
+}
 
 
 resource "aws_route_table" "private_subnet_rt_2c" {
@@ -164,14 +164,14 @@ resource "aws_route_table_association" "private_subnet_2c_assoc" {
   subnet_id   = aws_subnet.private_subnet-2c[count.index].id
   route_table_id = aws_route_table.private_subnet_rt_2c[count.index].id
 }
-#
-#resource "aws_route" "private_subnet_rt_2c_association" {
-#  count = 3
-#  route_table_id         = aws_route_table.private_subnet_rt_2c[count.index].id
-#  destination_cidr_block = "0.0.0.0/0"
-#  nat_gateway_id         = aws_instance.nat_instance_2c[count.index].id
-#}
-#
+
+resource "aws_route" "private_subnet_rt_2c_association" {
+  count = 2
+  route_table_id         = aws_route_table.private_subnet_rt_2c[count.index].id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_instance.nat_instance_2c[count.index].id
+}
+
 
 
 ############### NAT Instance & Keypair ###############
