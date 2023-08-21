@@ -146,7 +146,7 @@ resource "aws_route" "private_subnet_rt_2a_association" {
   count = 1
   route_table_id         = aws_route_table.private_subnet_rt_2a[count.index].id
   destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_instance.nat_instance_2a[count.index].id
+  nat_gateway_id         = aws_nat_gateway.nat_gw_2a[count.index].id
 }
 
 
@@ -169,7 +169,7 @@ resource "aws_route" "private_subnet_rt_2c_association" {
   count = 1
   route_table_id         = aws_route_table.private_subnet_rt_2c[count.index].id
   destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_instance.nat_instance_2c[count.index].id
+  nat_gateway_id         = aws_nat_gateway.nat_gw_2a[count.index].id
 }
 
 
