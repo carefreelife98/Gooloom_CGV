@@ -279,7 +279,6 @@ resource "aws_instance" "nat_instance_2a" {
   ami        = "ami-ami-01056eaaa603955a4"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
   instance_type = "t3.medium"
   subnet_id  = aws_subnet.public_subnet[0].id
-  key_name   = aws_key_pair.key.key_name  # 필요한 경우 키 이름으로 변경
   tags = {
     Name = "${var.prefix}-${var.env}-nat-instance-2a"
   }
@@ -290,13 +289,7 @@ resource "aws_instance" "nat_instance_2c" {
   ami        = "ami-ami-01056eaaa603955a4"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
   instance_type = "t3.medium"
   subnet_id  = aws_subnet.public_subnet[1].id
-  key_name   = aws_key_pair.key.key_name  # 필요한 경우 키 이름으로 변경
   tags = {
     Name = "${var.prefix}-${var.env}-nat-instance-2c"
   }
-}
-
-resource "aws_key_pair" "key" {
-  key_name   = var.key  # 원하는 키 페어의 이름으로 변경
-  public_key = file("~/.ssh/id_rsa.pub")  # 퍼블릭 키의 경로를 지정
 }
