@@ -70,7 +70,7 @@ variable "vpc_cidr" {
 
 variable "key" {
   description = "SSH-keypair-NAT"
-  type        = "string"
+  type        = string
   default     = "PRD"
 }
 
