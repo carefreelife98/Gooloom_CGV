@@ -24,7 +24,7 @@ resource "aws_vpc" "vpc" {
 }
 
 resource "aws_subnet" "public_subnet" {
-  count             = 2 # 두번 반복
+  count             = 3 # 두번 반복
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = cidrsubnet(var.vpc_cidr, 8, (count.index * 1) + 5)
   availability_zone = element(var.azs, count.index)
@@ -36,7 +36,7 @@ resource "aws_subnet" "public_subnet" {
 }
 
 resource "aws_subnet" "private_subnet-2a" {
-  count             = 2
+  count             = 3
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = cidrsubnet(var.vpc_cidr, 8, (count.index * 1) + 11)
   availability_zone = var.azs[0]
@@ -47,7 +47,7 @@ resource "aws_subnet" "private_subnet-2a" {
 }
 
 resource "aws_subnet" "private_subnet-2c" {
-  count             = 2
+  count             = 3
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = cidrsubnet(var.vpc_cidr, 8, (count.index * 1) + 22)
   availability_zone = var.azs[1]
@@ -129,21 +129,20 @@ resource "aws_route_table_association" "public_subnet_assoc" {
 ############### private routing ###############
 
 resource "aws_route_table" "private_subnet_rt_2a" {
-  count = 2
+  count = 3
   vpc_id = aws_vpc.vpc.id
 
   tags = {
     Name = "${var.prefix}-${var.env}-private-subnet-rt-2a-${count.index}"
   }
 }
-
 resource "aws_route_table_association" "private_subnet_2a_assoc" {
-  count       = 2
+  count       = 3
   subnet_id   = aws_subnet.private_subnet-2a[count.index].id
   route_table_id = aws_route_table.private_subnet_rt_2a[count.index].id
 }
 resource "aws_route" "private_subnet_rt_2a_association" {
-  count = 1
+  count = 2
   route_table_id         = aws_route_table.private_subnet_rt_2a[count.index].id
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = aws_nat_gateway.nat_gw_2a[count.index].id
@@ -151,7 +150,7 @@ resource "aws_route" "private_subnet_rt_2a_association" {
 
 
 resource "aws_route_table" "private_subnet_rt_2c" {
-  count = 2
+  count = 3
   vpc_id = aws_vpc.vpc.id
 
   tags = {
@@ -160,13 +159,13 @@ resource "aws_route_table" "private_subnet_rt_2c" {
 }
 
 resource "aws_route_table_association" "private_subnet_2c_assoc" {
-  count       = 2
+  count       = 3
   subnet_id   = aws_subnet.private_subnet-2c[count.index].id
   route_table_id = aws_route_table.private_subnet_rt_2c[count.index].id
 }
 
 resource "aws_route" "private_subnet_rt_2c_association" {
-  count = 1
+  count = 2
   route_table_id         = aws_route_table.private_subnet_rt_2c[count.index].id
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = aws_nat_gateway.nat_gw_2a[count.index].id
