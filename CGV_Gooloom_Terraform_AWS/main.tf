@@ -24,7 +24,7 @@ resource "aws_vpc" "vpc" {
 }
 
 resource "aws_subnet" "public_subnet" {
-  count             = 3 # 두번 반복
+  count             = 2 # 두번 반복
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = cidrsubnet(var.vpc_cidr, 8, (count.index * 1) + 5)
   availability_zone = element(var.azs, count.index)
@@ -32,6 +32,8 @@ resource "aws_subnet" "public_subnet" {
 
   tags = {
     Name = "${var.prefix}-${var.env}-sub-pub-${count.index}"
+    "kubernetes.io/cluster/lastDance${count.index}" = "shared"
+    "kubernetes.io/role/elb" = "1"
   }
 }
 
@@ -43,6 +45,8 @@ resource "aws_subnet" "private_subnet-2a" {
   map_public_ip_on_launch = false #퍼블릭 IP 부여를 하지 않습니다.
   tags = {
     Name = "${var.prefix}-${var.env}-sub-${element(var.svc, count.index)}-pri-2a"
+    "kubernetes.io/cluster/lastDance${count.index}" = "shared"
+    "kubernetes.io/role/internal-elb" = "1"
   }
 }
 
@@ -54,6 +58,8 @@ resource "aws_subnet" "private_subnet-2c" {
   map_public_ip_on_launch = false #퍼블릭 IP 부여를 하지 않습니다.
   tags = {
     Name = "${var.prefix}-${var.env}-sub-${element(var.svc, count.index)}-pri-2c"
+    "kubernetes.io/cluster/lastDance${count.index}" = "shared"
+    "kubernetes.io/role/internal-elb" = "1"
   }
 }
 
