@@ -2,19 +2,18 @@ package Gooloom_CGV_V1.domain.member;
 
 import lombok.Data;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 @Data
+@Entity
 public class Member {
-    private String memberName; //회원 성함
-    private String tel; // 회원 전화 번호
-    private Long id; // 회원 고유 ID
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-
-    public Member() {
-        this.id=id;
-    }
-
-    public Member(String memberName, String tel) {
-        this.memberName = memberName;
-        this.tel = tel;
-    }
+    private String memberName;
+    private String tel;
 }
