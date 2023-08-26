@@ -22,7 +22,7 @@ public class BasicItemController {
     public String items(Model model) {
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
-        return "/product/items";
+        return "product/items";
     }
 
     @GetMapping("/{itemId}")
@@ -51,7 +51,7 @@ public class BasicItemController {
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new NoSuchElementException("Item not found"));
         model.addAttribute("item", item);
-        return "/product/editItemForm";
+        return "product/editItemForm";
     }
 
     @PostMapping("/{itemId}/editItem")
