@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gooloom-was-deployment
+spec:
+  replicas: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 3
+  selector:
+    matchLabels:
+      app: gooloom-was
+  template:
+    metadata:
+      labels:
+        app: gooloom-was
+    spec:
+      containers:
+      - name: gooloom-was-container
+        image: csm4903/gooloom-was:v2.1.1
+        resources:
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gooloom-service-was
+spec:
+  selector:
+    app: gooloom-was
+  ports:
+  - protocol: TCP
+    port: 8081
+    targetPort: 8080
+  type: NodePort
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gooloom-service-ing
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: gooloom-service-was
+              port:
+                number: 8081
