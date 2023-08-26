@@ -22,8 +22,8 @@ spec:
         image: csm4903/gooloom-was:v2.1.1
         resources:
           requests:
-            memory: "1Gi"  # 예상되는 메모리 요구 사항
-            cpu: "0.5"     # 예상되는 CPU 요구 사항
+            memory: "0.8Gi"  # 예상되는 메모리 요구 사항
+            # cpu: "0.5"     # 예상되는 CPU 요구 사항
           limits:
             memory: "2Gi"  # 최대 메모리 제한
             cpu: "1"       # 최대 CPU 제한
