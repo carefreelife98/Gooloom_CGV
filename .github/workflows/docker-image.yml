@@ -26,7 +26,7 @@ jobs:
       run: echo "IMAGE_TAG=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
     - name: Build Docker image
-      run:
+      run: |
         cd ~
         docker buildx build --platform=linux/amd64 -t csm4903/gooloom-was:$IMAGE_TAG .
       working-directory: ${{ env.working-directory }}
