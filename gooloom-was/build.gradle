@@ -6,7 +6,7 @@ plugins {
 
 group = 'Gooloom'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+sourceCompatibility = '19'
 
 configurations {
 	compileOnly {
