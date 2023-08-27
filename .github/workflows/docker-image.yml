@@ -36,8 +36,8 @@ jobs:
       - name: 도커 이미지 빌드 # (2)
         run: |
           cd gooloom-was
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/gooloom-was:latest .
+          docker build -t csm4903/gooloom-was:latest .
 
 
       - name: Docker Hub 퍼블리시 # (4)
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/gooloom-was:latest
+        run: docker push csm4903/gooloom-was:latest
