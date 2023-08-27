@@ -12,7 +12,7 @@ jobs:
 
       - name: 스프링부트 애플리케이션 빌드 # (1)
         run: |
-          ls -a
+          cd gooloom-was
           ./gradlew build
           
       - name: Set Date as Image Tag
