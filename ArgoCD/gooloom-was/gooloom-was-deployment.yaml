@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: gooloom-was-container
-        image: csm4903/gooloom-was:v2.1.1
+        image: csm4903/gooloom-was:latest
         resources:
           requests:
             memory: "0.8Gi"  # 예상되는 메모리 요구 사항
