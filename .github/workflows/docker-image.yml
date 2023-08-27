@@ -13,7 +13,8 @@ jobs:
       - name: 스프링부트 애플리케이션 빌드 # (1)
         run: |
           cd gooloom-was
-          ./gradlew build
+          sudo chmod +x gradlew
+          sudo ./gradlew build
           
       - name: Set Date as Image Tag
         id: set_tag
