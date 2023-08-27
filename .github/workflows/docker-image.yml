@@ -10,6 +10,13 @@ jobs:
       - name: 저장소 Checkout
         uses: actions/checkout@v3
 
+      - name: Set up JDK 19
+        uses: actions/setup-java@v3
+        with:
+          java-version: '19'
+          distribution: 'temurin'
+          cache: 'gradle'
+
       - name: 스프링부트 애플리케이션 빌드 # (1)
         run: |
           cd gooloom-was
