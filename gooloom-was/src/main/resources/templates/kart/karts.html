@@ -8,7 +8,7 @@
 <body>
 <div class="container" style="max-width: 600px">
     <div class="py-5 text-center">
-        <h2>상품 목록</h2></div>
+        <h2>My Fast Orders</h2></div>
     <div class="row">
         <div class="col">
             <button class="btn btn-primary float-end"
@@ -21,16 +21,16 @@
             </div>
             <button class="btn btn-primary float-end"
                     onclick="location.href='addForm.html'"
-                    th:onclick="|location.href='@{/product/items/addItem}'|"
-                    type="button">상품 등록
+                    th:onclick="|location.href='@{/kart/karts/addKart}'|"
+                    type="button">추가 주문
             </button>
             <div class="py-3 text-center">
                 <h2>      </h2>
             </div>
             <button class="btn btn-primary float-end"
-                    onclick="location.href='deleteItemAllForm.html'"
-                    th:onclick="|location.href='@{/product/items/deleteItemAll}'|"
-                    type="button">상품 전체 삭제
+                    onclick="location.href='deleteKartAllForm.html'"
+                    th:onclick="|location.href='@{/kart/karts/deleteKartAll}'|"
+                    type="button">나중에 주문 할래요
             </button>
         </div>
     </div>
@@ -46,11 +46,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="item : ${items}">
-                <td><a href="item.html" th:href="@{/product/items/{itemId}(itemId=${item.itemId})}" th:text="${item.itemId}">상품 id</a></td>
-                <td><a href="item.html" th:href="@{|/product/items/${item.itemId}|}" th:text="${item.itemName}">상품명</a></td>
-                <td th:text="${item.itemPrice}">10000</td>
-                <td th:text="${item.itemQuantity}">10</td>
+            <tr th:each="kart : ${karts}">
+                <td><a href="kart.html" th:href="@{/kart/karts/{kartId}(kartId=${kart.kartId})}" th:text="${kart.kartId}">상품 id</a></td>
+                <td><a href="kart.html" th:href="@{|/kart/karts/${kart.kartId}|}" th:text="${kart.kartName}">상품명</a></td>
+                <td th:text="${kart.kartPrice}">10000</td>
+                <td th:text="${kart.kartQuantity}">10</td>
             </tr>
             </tbody>
         </table>

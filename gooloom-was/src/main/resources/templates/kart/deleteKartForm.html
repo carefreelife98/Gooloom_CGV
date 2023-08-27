@@ -15,25 +15,25 @@
   <div
           class="py-5 text-center"> <h2>상품 삭제</h2>
   </div>
-  <form action="item.html" th:action method="post">
+  <form action="kart.html" th:action method="post">
     <div>
-      <label for="itemId">상품 ID</label>
-      <input type="text" id="itemId" name="itemId" class="form-control" th:value="${deletedItem.itemId}" readonly>
+      <label for="kartId">상품 ID</label>
+      <input type="text" id="kartId" name="kartId" class="form-control" th:value="${deletedKart.kartId}" readonly>
     </div>
 
     <div>
-      <label for="itemName">상품명</label>
-      <input type="text" id="itemName" name="itemName" class="form-control" th:value="${deletedItem.itemName}" readonly>
+      <label for="kartName">상품명</label>
+      <input type="text" id="kartName" name="kartName" class="form-control" th:value="${deletedKart.kartName}" readonly>
     </div>
 
     <div>
-      <label for="itemPrice">상품 가격</label>
-      <input type="text" id="itemPrice" name="itemPrice" class="form-control" th:value="${deletedItem.itemPrice}" readonly>
+      <label for="kartPrice">상품 가격</label>
+      <input type="text" id="kartPrice" name="kartPrice" class="form-control" th:value="${deletedKart.kartPrice}" readonly>
     </div>
 
     <div>
-      <label for="itemQuantity">상품 수량</label>
-      <input type="text" id="itemQuantity" name="itemQuantity" class="form-control" th:value="${deletedItem.itemQuantity}" readonly>
+      <label for="kartQuantity">상품 수량</label>
+      <input type="text" id="kartQuantity" name="kartQuantity" class="form-control" th:value="${deletedKart.kartQuantity}" readonly>
     </div>
 
     <hr class="my-4">
@@ -44,8 +44,8 @@
       </div>
       <div class="col">
         <button class="w-100 btn btn-secondary btn-lg"
-                onclick="location.href='item.html'"
-                th:onclick="|location.href='@{/product/items/{itemId}(itemId=${deletedItem.itemId})}'|"
+                onclick="location.href='kart.html'"
+                th:onclick="|location.href='@{/kart/karts/{kartId}(kartId=${deletedKart.kartId})}'|"
                 type="button">취소</button>
       </div>
     </div>
