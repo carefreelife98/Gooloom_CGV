@@ -17,6 +17,7 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: 19  # Change this to your desired Java version
+        distribution: 'temurin'
 
     - name: Build and Package Spring Boot App
       run: |
