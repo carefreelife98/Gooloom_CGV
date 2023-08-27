@@ -24,20 +24,20 @@ jobs:
         shell:
           bash
           
-      - name: Set Date as Image Tag
-        id: set_tag
-        run: echo "IMAGE_TAG=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
-      
-      - name: 도커 이미지 빌드 # (2)
-        run: |
-          cd gooloom-was
-          docker build -t csm4903/gooloom-was:$IMAGE_TAG .
-
+      # - name: Set Date as Image Tag
+      #   id: set_tag
+      #   run: echo "IMAGE_TAG=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
       - name: Docker Hub 로그인 # (3)
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: 도커 이미지 빌드 # (2)
+        run: |
+          cd gooloom-was
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/gooloom-was:latest .
+
 
       - name: Docker Hub 퍼블리시 # (4)
-        run: docker push csm4903/gooloom-was:$IMAGE_TAG
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/gooloom-was:latest
