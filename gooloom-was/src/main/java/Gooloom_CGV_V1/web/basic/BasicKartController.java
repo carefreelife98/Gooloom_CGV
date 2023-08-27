@@ -77,7 +77,7 @@ public class BasicKartController {
 
     @GetMapping("/deleteKartAll")
     public String deleteKartAllForm() {
-        return "product/deleteKartAllForm";
+        return "kart/deleteKartAllForm";
     }
 
     @PostMapping("/deleteKartAll")
