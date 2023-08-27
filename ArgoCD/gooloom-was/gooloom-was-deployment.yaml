@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: gooloom-was-deployment
 spec:
-  replicas: 20
+  replicas: 2
   strategy:
     type: RollingUpdate
     rollingUpdate:
