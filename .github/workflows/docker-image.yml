@@ -14,13 +14,13 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '19'
-          distribution: 'Wrapper'
+          distribution: 'oracle'
 
       - name: 스프링부트 애플리케이션 빌드 # (1)
         run: |
           cd gooloom-was
           sudo chmod +x gradlew
-          sudo ./gradlew build
+          ./gradlew build
         shell:
           bash
           
