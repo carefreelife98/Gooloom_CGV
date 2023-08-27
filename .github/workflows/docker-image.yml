@@ -1,0 +1,42 @@
+name: Build, Push, and Deploy Gooloom-CGV Spring Boot App (WAS)
+
+on:
+  push:
+    branches:
+      - main  # Change this to your main branch name
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: 19  # Change this to your desired Java version
+
+    - name: Build and Package Spring Boot App
+      run: |
+        cd /Gooloom_CGV/gooloom-was
+        ./gradlew clean package
+        
+    - name: Set Date as Image Tag
+      id: set_tag
+      run: echo "IMAGE_TAG=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+
+    - name: Build Docker image
+      run: |
+        cd /Gooloom_CGV/gooloom-was
+        docker buildx build --platform=linux/amd64 -t csm4903/gooloom-was:$IMAGE_TAG .
+
+    - name: Log in to Docker Hub
+      run: |
+        docker login -u csm4903 -p ${{ secrets.DOCKERHUB_TOKEN }}
+      
+    - name: Push Docker image to Docker Hub
+      run: |
+        docker tag gooloom-was csm4903/gooloom-was:latest
+        docker push csm4903/gooloom-was:latest
