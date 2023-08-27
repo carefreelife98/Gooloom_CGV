@@ -20,7 +20,7 @@ jobs:
         run: |
           cd gooloom-was
           sudo chmod +x gradlew
-          sudo ./gradlew build
+          ./gradlew build
         shell:
           bash
           
