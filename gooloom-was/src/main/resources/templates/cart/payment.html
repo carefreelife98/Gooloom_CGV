@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>구매 완료</title>
+</head>
+<body>
+<div class="py-5 text-center">
+    <h2>구매 완료되었습니다!</h2>
+</div>
+<div class="col">
+    <button class="w-100 btn btn-secondary btn-lg"
+            onclick="location.href='index.html'"
+            th:onclick="|location.href='@{/}'|"
+            type="button">목록으로</button>
+</div>
+</body>
+</html>

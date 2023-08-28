@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+            href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>주문 상세</h2>
+    </div>
+
+    <!-- 추가 -->
+    <h2 th:if="${param.status}" th:text="'저장 완료'"></h2>
+
+    <div>
+        <label for="cartId">주문 상품 ID</label>
+        <input type="text" id="cartId" name="cartId" class="form-control"
+               th:value="${cart.cartId}" readonly>
+    </div> <div>
+    <label for="cartName">상품명</label>
+    <input type="text" id="cartName" name="cartName" class="form-control"
+           th:value="${cart.cartName}" readonly> </div>
+    <div>
+        <label for="cartPrice">상품 가격</label>
+        <input type="text" id="cartPrice" name="cartPrice" class="form-control"
+               th:value="${cart.cartPrice}" readonly>
+    </div> <div>
+    <label for="cartQuantity">상품 수량</label>
+    <input type="text" id="cartQuantity" name="cartQuantity" class="form-control"
+           th:value="${cart.cartQuantity}" readonly>
+</div>
+    <hr class="my-4">
+    <div class="row">
+        <div class="col">
+            <button class="w-100 btn btn-primary btn-lg"
+                    onclick="location.href='editCartForm.html'"
+                    th:onclick="|location.href='@{/cart/carts/{cartId}/editCart(cartId=${cart.cartId})}'|"
+                    type="button">상품 수정</button>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-secondary btn-lg"
+                    onclick="location.href='carts.html'"
+                    th:onclick="|location.href='@{/cart/carts}'|"
+                    type="button">목록으로</button>
+        </div>
+    </div>
+</div> <!-- /container -->
+</body>
+</html>

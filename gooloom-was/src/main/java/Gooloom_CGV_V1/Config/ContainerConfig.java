@@ -1,4 +1,4 @@
-package Gooloom_CGV_V1.Config;
+package Gooloom_CGV_V1.config;
 
 import org.apache.catalina.connector.Connector;
 import org.apache.coyote.ajp.AbstractAjpProtocol;

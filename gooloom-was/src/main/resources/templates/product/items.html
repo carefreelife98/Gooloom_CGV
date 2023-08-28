@@ -3,9 +3,14 @@
 <head>
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}"
-            href="../css/bootstrap.min.css" rel="stylesheet">
+          href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<div class="container" style="max-width: 600px">
+    <div class="header">
+        <img src="https://prod-static-s3-bucket-01.s3.ap-northeast-2.amazonaws.com/cgv.png" width="200" height="100"
+             alt="CGV">
+    </div>
 <div class="container" style="max-width: 600px">
     <div class="py-5 text-center">
         <h2>상품 목록</h2></div>
@@ -16,46 +21,25 @@
                     th:onclick="|location.href='@{/}'|"
                     type="button">처음으로
             </button>
-            <div class="py-5 text-center">
-                <h2> </h2>
-            </div>
-            <button class="btn btn-primary float-end"
-                    onclick="location.href='addForm.html'"
-                    th:onclick="|location.href='@{/product/items/addItem}'|"
-                    type="button">상품 등록
-            </button>
-            <div class="py-3 text-center">
-                <h2>      </h2>
-            </div>
-            <button class="btn btn-primary float-end"
-                    onclick="location.href='deleteItemAllForm.html'"
-                    th:onclick="|location.href='@{/product/items/deleteItemAll}'|"
-                    type="button">상품 전체 삭제
-            </button>
         </div>
     </div>
     <hr class="my-4">
     <div>
         <table class="table">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>상품명</th>
-                <th>가격</th>
-                <th>수량</th>
-            </tr>
-            </thead>
             <tbody>
             <tr th:each="item : ${items}">
-                <td><a href="item.html" th:href="@{/product/items/{itemId}(itemId=${item.itemId})}" th:text="${item.itemId}">상품 id</a></td>
-                <td><a href="item.html" th:href="@{|/product/items/${item.itemId}|}" th:text="${item.itemName}">상품명</a></td>
-                <td th:text="${item.itemPrice}">10000</td>
-                <td th:text="${item.itemQuantity}">10</td>
+                <span><img th:src="@{${item.image}}" style="width: 300px; height: 200px;"></span><br>
+                <span><a th:href="@{/product/items/{itemId}(itemId=${item.itemId})}" th:text="${item.itemId}">상품 id</a></span><br>
+                <span><a th:href="@{|/product/items/${item.itemId}|}" th:text="${item.itemName}">상품 이름</a></span><br>
+                <span th:text="${item.itemPrice}">10000</span><br>
+                <span th:text="${item.itemQuantity}">10</span><br>
             </tr>
+
             </tbody>
         </table>
     </div>
 </div> <!-- /container -->
+</div>
 </body>
 </htmlxmlns:th>
 </html>

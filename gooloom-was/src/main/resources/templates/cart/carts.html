@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+            href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2>My Fast Orders</h2></div>
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary float-end"
+                    onclick="location.href='index.html'"
+                    th:onclick="|location.href='@{/}'|"
+                    type="button">처음으로
+            </button>
+            <div class="py-5 text-center">
+                <h2> </h2>
+            </div>
+            <button class="btn btn-primary float-end"
+                    onclick="location.href='addForm.html'"
+                    th:onclick="|location.href='@{/product/items}'|"
+                    type="button">추가 주문
+            </button>
+            <div class="py-3 text-center">
+                <h2>      </h2>
+            </div>
+            <button class="btn btn-primary float-end"
+                    onclick="location.href='deleteKartAllForm.html'"
+                    th:onclick="|location.href='@{/cart/myCart/deleteKartAll}'|"
+                    type="button">나중에 주문 할래요
+            </button>
+        </div>
+    </div>
+    <hr class="my-4">
+    <div>
+        <table class="table">
+            <tbody>
+            <tr th:each="cart : ${carts}">
+                <div style="display: flex; justify-content: center; align-items: center; height: 200px;">
+                    <img th:src="@{${cart.getImage()}}" style="width: 300px; height: 200px;">
+                </div>
+                <span><a href="cart.html" th:href="@{/cart/carts/{kartId}(kartId=${cart.getCartId})}" th:text="${cart.getCartId}">상품 id</a></span><br>
+                <span><a href="cart.html" th:href="@{|/cart/carts/${cart.getCartId}|}" th:text="${cart.getItemName}">상품명</a></span><br>
+                <span th:text="${cart.getCartPrice}">10000</span><br>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <button class="btn btn-primary float-end"
+            onclick="location.href='payment.html'"
+            th:onclick="|location.href='@{/cart/myCart/payment}'|"
+            type="button">구매하기
+    </button>
+</div> <!-- /container -->
+</body>
+</htmlxmlns:th>
+</html>

@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}"
-            href="../css/bootstrap.min.css" rel="stylesheet">
+          href="../css/bootstrap.min.css" rel="stylesheet">
     <style>
         .container {
-            max-width: 560px;
+            max-width: 600px;
         }
     </style>
 </head>
@@ -20,10 +20,16 @@
     <h2 th:if="${param.status}" th:text="'저장 완료'"></h2>
 
     <div>
+        <div style="display: flex; justify-content: center; align-items: center; height: 200px;">
+            <img th:src="@{${item.image}}" style="width: 300px; height: 200px;">
+        </div>
+    </div>
+    <div>
         <label for="itemId">상품 ID</label>
         <input type="text" id="itemId" name="itemId" class="form-control"
                th:value="${item.itemId}" readonly>
-    </div> <div>
+    </div>
+    <div>
     <label for="itemName">상품명</label>
     <input type="text" id="itemName" name="itemName" class="form-control"
            th:value="${item.itemName}" readonly> </div>
@@ -31,24 +37,37 @@
         <label for="itemPrice">상품 가격</label>
         <input type="text" id="itemPrice" name="itemPrice" class="form-control"
                th:value="${item.itemPrice}" readonly>
-    </div> <div>
+    </div>
+
+    <div>
     <label for="itemQuantity">상품 수량</label>
-    <input type="text" id="itemQuantity" name="itemQuantity" class="form-control"
-           th:value="${item.itemQuantity}" readonly>
+        <input type="text" id="itemQuantity" name="itemQuantity" class="form-control">
 </div>
     <hr class="my-4">
     <div class="row">
         <div class="col">
+            <form method="post" action="/cart/myCart/addCart">
+                <input type="hidden" id="id" name="itemId" th:value="${item.itemId}">
+                <input type="hidden" id="name" name="cartName" th:value="${item.itemName}">
+                <input type="hidden" id="cartPrice" name="cartPrice" th:value="${item.itemPrice}">
+                <input type="hidden" id="image" name="cartImage" th:value="${item.image}">
             <button class="w-100 btn btn-primary btn-lg"
-                    onclick="location.href='editItemForm.html'"
-                    th:onclick="|location.href='@{/product/items/{itemId}/editItem(itemId=${item.itemId})}'|"
-                    type="button">상품 수정</button>
+                    onclick="location.href='saveCart.html'"
+                    th:onclick="|location.href='@{/cart/myCart/addCart}'|"
+                    type="submit">장바구니 담기</button>
+            </form>
         </div>
         <div class="col">
             <button class="w-100 btn btn-secondary btn-lg"
                     onclick="location.href='items.html'"
                     th:onclick="|location.href='@{/product/items}'|"
                     type="button">목록으로</button>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-secondary btn-lg"
+                    onclick="location.href='carts.html'"
+                    th:onclick="|location.href='@{/cart/myCart}'|"
+                    type="button">장바구니 보러가기</button>
         </div>
     </div>
 </div> <!-- /container -->

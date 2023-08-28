@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>장바구니에 저장 완료</title>
+</head>
+<body>
+<div class="py-5 text-center">
+    <h2>장바구니에 저장되었습니다!</h2>
+</div>
+<div class="col">
+    <button class="w-100 btn btn-secondary btn-lg"
+            onclick="location.href='items.html'"
+            th:onclick="|location.href='@{/product/items}'|"
+            type="button">목록으로</button>
+</div>
+<div class="col">
+    <button class="w-100 btn btn-secondary btn-lg"
+            onclick="location.href='items.html'"
+            th:onclick="|location.href='@{/cart/myCart}'|"
+            type="button">나의 장바구니 보기</button>
+</div>
+</body>
+</html>

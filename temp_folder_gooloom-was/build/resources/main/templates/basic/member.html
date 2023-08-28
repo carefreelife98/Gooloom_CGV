@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+            href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>회원 상세</h2>
+    </div>
+
+    <!-- 추가 -->
+    <h2 th:if="${param.status}" th:text="'저장 완료'"></h2>
+
+    <div>
+        <label for="memberId">회원 ID</label>
+        <input type="text" id="memberId" name="memberId" class="form-control"
+               th:value="${member.id}" readonly>
+    </div>
+    <div>
+    <label for="memberName">회원명</label>
+    <input type="text" id="memberName" name="memberName" class="form-control"
+           th:value="${member.memberName}" readonly>
+    </div>
+    <div>
+        <label for="tel">휴대폰 번호</label>
+        <input type="text" id="tel" name="tel" class="form-control"
+               th:value="${member.tel}" readonly>
+    </div>
+
+    <hr class="my-4">
+    <div class="row">
+        <div class="col">
+            <button class="w-100 btn btn-primary btn-lg"
+                    onclick="location.href='editForm.html'"
+                    th:onclick="|location.href='@{/basic/members/{memberId}/edit(memberId=${member.id})}'|"
+                    type="button">회원 수정
+            </button>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-secondary btn-lg"
+                    onclick="location.href='members.html'"
+                    th:onclick="|location.href='@{/basic/members}'|"
+                    type="button">목록으로</button>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-primary btn-lg"
+                    th:onclick="|location.href='@{|/basic/members/${member.id}/delete|}'|"
+                    type="button">회원 삭제
+            </button>
+        </div>
+    </div>
+</div> <!-- /container -->
+</body>
+</html>
