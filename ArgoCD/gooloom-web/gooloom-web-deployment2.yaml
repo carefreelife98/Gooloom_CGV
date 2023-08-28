@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: gooloom-web-container
-        image: csm4903/gooloom-web:v4.0.0
+        image: csm4903/gooloom-web:modjk
         resources:
           requests:
             memory: 512Mi # 384Mi
