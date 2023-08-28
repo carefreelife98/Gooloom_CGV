@@ -10,7 +10,7 @@ spec:
   minReplicas: 2
   maxReplicas: 100
   metrics:
-  - type: Pods
+  - type: Resource
     resource:
       name: cpu
       target:
