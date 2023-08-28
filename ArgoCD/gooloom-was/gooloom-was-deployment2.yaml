@@ -19,6 +19,7 @@ spec:
       containers:
       - name: gooloom-was-container
         image: csm4903/gooloom-was:latest
+        imagePullPolicy: "Always"
         resources:
           requests:
             memory: 768Mi  # 예상되는 메모리 요구 사항
