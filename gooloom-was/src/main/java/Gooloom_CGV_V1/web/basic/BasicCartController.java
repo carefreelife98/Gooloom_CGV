@@ -50,7 +50,7 @@ public class BasicCartController {
         Cart savedCart = cartRepository.save(cart);
         redirectAttributes.addAttribute("cartId", savedCart.getCartId());
         redirectAttributes.addAttribute("status", true);
-        return "/cart/saveCart";
+        return "cart/saveCart";
     }
 
     @GetMapping("/{cartId}/editCart")
@@ -96,6 +96,6 @@ public class BasicCartController {
     // 구매 db 테이블 필요?
     @GetMapping("/payment")
     public String payment() {
-        return "/cart/payment";
+        return "cart/payment";
     }
 }
