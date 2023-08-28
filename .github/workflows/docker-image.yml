@@ -1,6 +1,9 @@
 name: Gooloom-CGV-WAS - CI with Gihub Actions, Docker
 on:
   push:
+    paths:
+      - 'gooloom-was/**'
+      - 'gooloom-web/**'
     branches: [ main ]
 
 jobs:
