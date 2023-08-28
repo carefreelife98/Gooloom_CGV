@@ -22,8 +22,8 @@ spec:
         image: csm4903/gooloom-web:v4.0.0
         resources:
           requests:
-            memory: 384Mi
-            cpu: 300m
+            memory: 512Mi # 384Mi
+            cpu: 500m # 300m
           limits:
             memory: 512Mi
             cpu: 500m
