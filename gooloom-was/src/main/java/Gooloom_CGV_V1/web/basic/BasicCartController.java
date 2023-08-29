@@ -1,7 +1,7 @@
 package Gooloom_CGV_V1.web.basic;
 
-import Gooloom_CGV_V1.domain.cart.Cart;
-import Gooloom_CGV_V1.domain.cart.CartRepository;
+import Gooloom_CGV_V1.domain.primary.Cart;
+import Gooloom_CGV_V1.repository.primary.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,7 +46,7 @@ public class BasicCartController {
         cart.setItemId(itemId);
         cart.setImage(cartImage);
         cart.setItemName(name);
-        System.out.println("cart = " + cart);
+
         Cart savedCart = cartRepository.save(cart);
         redirectAttributes.addAttribute("cartId", savedCart.getCartId());
         redirectAttributes.addAttribute("status", true);

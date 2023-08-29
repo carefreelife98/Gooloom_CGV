@@ -1,9 +1,8 @@
 package Gooloom_CGV_V1.web.basic;
 
-import Gooloom_CGV_V1.domain.item.Item;
-import Gooloom_CGV_V1.domain.item.ItemRepository;
+import Gooloom_CGV_V1.domain.primary.Item;
+import Gooloom_CGV_V1.repository.primary.ItemRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +21,6 @@ public class BasicItemController {
     @GetMapping
     public String items(Model model) {
         List<Item> items = itemRepository.findAll();
-        System.out.println("items = " + items);
         model.addAttribute("items", items);
         return "product/items";
     }
