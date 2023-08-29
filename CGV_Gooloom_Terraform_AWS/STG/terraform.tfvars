@@ -4,5 +4,5 @@ azs            = ["ap-northeast-3a", "ap-northeast-3c"]
 num_azs        = 2
 num_private_subnets = 2
 
-env            = "STG"
+env            = "DEV"
 svc            = ["web", "was", "db"]
