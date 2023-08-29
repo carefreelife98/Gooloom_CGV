@@ -180,36 +180,36 @@ resource "aws_route" "private_subnet_rt_3c_association" {
 
 
 ############### NAT Instance & Keypair ###############
-resource "aws_instance" "bastion" {
-  count      = 1
-  ami        = "ami-01056eaaa603955a4"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
-  instance_type = "t3.medium"
-  subnet_id  = aws_subnet.public_subnet[0].id
-  key_name = "gooloom"
-  tags = {
-    Name = "${var.prefix}-${var.env}-bastion-3a"
-  }
-}
+#resource "aws_instance" "bastion" {
+#  count      = 1
+#  ami        = "ami-01056eaaa603955a4"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
+#  instance_type = "t3.medium"
+#  subnet_id  = aws_subnet.public_subnet[0].id
+#  key_name = "gooloom"
+#  tags = {
+#    Name = "${var.prefix}-${var.env}-bastion-3a"
+#  }
+#}
 
-resource "aws_instance" "nat_instance_3a" {
-  count      = 1
-  ami        = "ami-01056eaaa603955a4"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
-  instance_type = "t3.medium"
-  subnet_id  = aws_subnet.public_subnet[0].id
-  tags = {
-    Name = "${var.prefix}-${var.env}-nat-instance-3a"
-  }
-}
+#resource "aws_instance" "nat_instance_3a" {
+#  count      = 1
+#  ami        = "ami-01056eaaa603955a4"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
+#  instance_type = "t3.medium"
+#  subnet_id  = aws_subnet.public_subnet[0].id
+#  tags = {
+#    Name = "${var.prefix}-${var.env}-nat-instance-3a"
+#  }
+#}
 
-resource "aws_instance" "nat_instance_3c" {
-  count      = 1
-  ami        = "ami-01056eaaa603955a4"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
-  instance_type = "t3.medium"
-  subnet_id  = aws_subnet.public_subnet[1].id
-  tags = {
-    Name = "${var.prefix}-${var.env}-nat-instance-3c"
-  }
-}
+#resource "aws_instance" "nat_instance_3c" {
+#  count      = 1
+#  ami        = "ami-01056eaaa603955a4"  # 이 부분은 실제 AMI ID로 변경해야 합니다.
+#  instance_type = "t3.medium"
+#  subnet_id  = aws_subnet.public_subnet[1].id
+#  tags = {
+#    Name = "${var.prefix}-${var.env}-nat-instance-3c"
+#  }
+#}
 
 
 
