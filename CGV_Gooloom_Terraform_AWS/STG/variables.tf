@@ -78,7 +78,7 @@ variable "vpc_cidr" {
 variable "env" {
   description = "DEV / STG / PRD"
   type        = string
-  default     = "STG"
+  default     = "DEV"
 }
 
 variable "svc" {
