@@ -12,12 +12,12 @@ variable "prefix" {
 
 variable "region" {
   description = "The region where the resources are created."
-  default     = "ap-northeast-2"
+  default     = "ap-northeast-3"
 }
 
 variable "address_space" {
   description = "The address space that is used by the virtual network. You can supply more than one address space. Changing this forces a new resource to be created."
-  default     = "10.0.0.0/16"
+  default     = "20.0.0.0/16"
 }
 
 variable "instance_type" {
@@ -78,7 +78,7 @@ variable "vpc_cidr" {
 variable "env" {
   description = "DEV / STG / PRD"
   type        = string
-  default     = "PRD"
+  default     = "STG"
 }
 
 variable "svc" {
