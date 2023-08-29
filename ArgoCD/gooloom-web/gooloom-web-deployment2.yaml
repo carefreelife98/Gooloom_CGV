@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: gooloom-web-container
-        image: csm4903/gooloom-web:modjk_newer2
+        image: csm4903/gooloom-web:modjk_newer
         imagePullPolicy: "Always"
         resources:
           requests:
