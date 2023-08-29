@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: gooloom-was-container
-        image: csm4903/gooloom-was:latest
+        image: csm4903/gooloom-was:modjk_newer
         imagePullPolicy: "Always"
         resources:
           requests:
@@ -39,7 +39,7 @@ spec:
     app: gooloom-was
   ports:
   - protocol: TCP
-    port: 8081
+    port: 8001
     targetPort: 8080
   type: NodePort
 ---
@@ -61,4 +61,4 @@ spec:
             service:
               name: gooloom-service-was
               port:
-                number: 8081
+                number: 8001
