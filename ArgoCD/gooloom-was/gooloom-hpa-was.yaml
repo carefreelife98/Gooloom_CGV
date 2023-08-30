@@ -8,6 +8,7 @@ spec:
     kind: Deployment
     name: gooloom-web-deployment
   minReplicas: 1
+  desiredReplicas: 1
   maxReplicas: 100
   metrics:
   - type: Resource
