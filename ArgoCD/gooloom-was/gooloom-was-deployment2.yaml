@@ -24,9 +24,6 @@ spec:
           requests:
             memory: 768Mi  # 예상되는 메모리 요구 사항
             cpu: 600m     # 예상되는 CPU 요구 사항
-          limits:
-            memory: 768Mi  # 최대 메모리 제한 # 1Gi
-            cpu: 600m      # 최대 CPU 제한 # 1000m
         ports:
         - containerPort: 8080
 ---
