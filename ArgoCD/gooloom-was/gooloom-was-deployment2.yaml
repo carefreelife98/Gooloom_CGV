@@ -7,7 +7,7 @@ spec:
     type: RollingUpdate
     rollingUpdate:
       maxSurge: 1
-      maxUnavailable: 3
+      maxUnavailable: 1
   selector:
     matchLabels:
       app: gooloom-was
@@ -22,7 +22,7 @@ spec:
         imagePullPolicy: "Always"
         resources:
           requests:
-            memory: 760Mi  # 예상되는 메모리 요구 사항
+            memory: 768Mi  # 예상되는 메모리 요구 사항
             cpu: 600m     # 예상되는 CPU 요구 사항
           limits:
             memory: 768Mi  # 최대 메모리 제한 # 1Gi
