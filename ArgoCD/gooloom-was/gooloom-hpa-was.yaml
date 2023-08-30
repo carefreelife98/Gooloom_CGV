@@ -6,7 +6,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: gooloom-was-deployment
+    name: gooloom-web-deployment
   minReplicas: 2
   maxReplicas: 100
   metrics:
