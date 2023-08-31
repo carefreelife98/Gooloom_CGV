@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: gooloom-was-container
-        image: csm4903/gooloom-was:20230827100526
+        image: csm4903/gooloom-was:latest
         imagePullPolicy: "Always"
         resources:
           requests:
